@@ -5,12 +5,13 @@ import java.net.UnknownHostException;
 
 import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.piedino.player.Player;
+import it.unibo.ai.didattica.competition.tablut.piedino.search.PiedinoGameAshtonTablut;
+import it.unibo.ai.didattica.competition.tablut.piedino.search.Player;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
-import it.unibo.ai.didattica.competition.tablut.domain.Game;
-import it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut;
 import java.lang.Double;
+
 public class PiedinoTablutClient extends TablutClient {
 
 	private int gameVariant;
@@ -39,13 +40,13 @@ public class PiedinoTablutClient extends TablutClient {
 	@Override
 	public void run() {
 		
-		State state;
-		Game rules;
+		State state=null;
+		aima.core.search.adversarial.Game<State,Action,Turn> rules=null;
 		
 		switch(gameVariant) {
 		case 0: 
 			state=new StateTablut();
-			rules=new GameAshtonTablut(0, -1, "logs", "white_ai", "black_ai"); //FIXME non usiamo la classe AshtonTablutGame ma usiamo un adapter o altro
+			rules=new PiedinoGameAshtonTablut(0, -1, "logs", "white_ai", "black_ai"); //FIXME non usiamo la classe AshtonTablutGame ma usiamo un adapter o altro
 		default:
 			System.err.println("Game variant not recognized");
 			System.exit(-1);
