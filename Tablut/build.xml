@@ -13,6 +13,7 @@
             <classpath>
                 <pathelement path="lib/gson-2.2.2.jar" />
                 <pathelement path="lib/commons-cli-1.4.jar" />
+                <pathelement path="lib/aima-core.jar" />
             </classpath>
         </javac>
         <copy todir="build">
@@ -27,6 +28,7 @@
                 <pathelement location="lib/commons-cli-1.4.jar"/>
                 <pathelement location="build"/>
             </classpath>
+        	 <arg value="-g"/>
         </java>
     </target>
     <target name="randomwhite">
@@ -63,8 +65,27 @@
             </classpath>
         </java>
     </target>
-	
 
+    <target name="piedinoblack">
+        <java classname="it.unibo.ai.didattica.competition.tablut.piedino.client.BlackPiedinoTablutClient" fork="true">
+            <classpath>
+                <pathelement location="lib/gson-2.2.2.jar"/>
+                <pathelement path="lib/aima-core.jar" />
+                <pathelement location="build"/>
+            </classpath>
+        </java>
+    </target>
+
+	<target name="piedinowhite">
+	        <java classname="it.unibo.ai.didattica.competition.tablut.piedino.client.WhitePiedinoTablutClient" fork="true">
+	            <classpath>
+	                <pathelement location="lib/gson-2.2.2.jar"/>
+	                <pathelement path="lib/aima-core.jar" />
+	                <pathelement location="build"/>
+	            </classpath>
+	        </java>
+	    </target>
+	
     <target name="tester">
         <java classname="it.unibo.ai.didattica.competition.tablut.tester.Tester" fork="true">
             <classpath>
