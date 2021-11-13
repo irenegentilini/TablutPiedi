@@ -10,15 +10,16 @@ import it.unibo.ai.didattica.competition.tablut.piedino.player.Player;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.Game;
 import it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut;
-
+import java.lang.Double;
 public class PiedinoTablutClient extends TablutClient {
 
-	private int game;
+	private int gameVariant;
 	private boolean debug;
+	private Player player;
 	
-	public PiedinoTablutClient(String player, String name, int timeout, String ipAddress,int game, boolean debug) throws UnknownHostException, IOException {
-		super(player,name,timeout,ipAddress);
-		this.game=game;
+	public PiedinoTablutClient(String role, String name, int timeout, String ipAddress,int gameVariant, boolean debug) throws UnknownHostException, IOException {
+		super(role,name,timeout,ipAddress);
+		this.gameVariant=gameVariant;
 		this.debug=debug;
 	}
 
@@ -35,21 +36,32 @@ public class PiedinoTablutClient extends TablutClient {
 	}
 	
 	
-	
 	@Override
 	public void run() {
+		
+		State state;
+		Game rules;
+		
+		switch(gameVariant) {
+		case 0: 
+			state=new StateTablut();
+			rules=new GameAshtonTablut(0, -1, "logs", "white_ai", "black_ai"); //FIXME non usiamo la classe AshtonTablutGame ma usiamo un adapter o altro
+		default:
+			System.err.println("Game variant not recognized");
+			System.exit(-1);
+		}
+		
 		try {
 			declareName();	
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		State state=new StateTablut(); //FIXME c'è un modo per generalizzare? 
-		Game rules = new GameAshtonTablut(0, -1, "logs", "white_ai", "black_ai"); //FIXME non usiamo la classe AshtonTablutGame ma usiamo un adapter o altro
-		
-		Player player= new Player(state,rules); // QUALCOSA DEL GENERE POTREBBE ANDARE? \
+				
+		player=new Player(rules, Double.MIN_VALUE,Double.MIN_VALUE,super.getTimeout()-2);
 		
 		state.setTurn(State.Turn.WHITE);
+		
+		
 		
 		 // set type of game
         	while(true) {
@@ -70,7 +82,7 @@ public class PiedinoTablutClient extends TablutClient {
 		        if (this.getPlayer().equals(State.Turn.WHITE)) {
 		            // if is my turn (WHITE)
 	                // search the best move in search tree
-	                Action a = player.makeAction(state);
+	                Action a = player.makeDecision(state);
 	                try {
 	                    this.write(a);
 	                } catch (ClassNotFoundException | IOException e) {
@@ -88,7 +100,7 @@ public class PiedinoTablutClient extends TablutClient {
 	        	// if is my turn (BLACK)
 	        	if (state.getTurn().equals(State.Turn.BLACK)) {
 	        		// search the best move in search tree
-	                Action a = player.makeAction(state);
+	                Action a = player.makeDecision(state);
 	                try {
 	                    this.write(a);
 	                } catch (ClassNotFoundException | IOException e) {
@@ -120,19 +132,5 @@ public class PiedinoTablutClient extends TablutClient {
 	     
 		}
 	}
-
-
-	/**
-	 * Method that find a suitable moves searching in game tree
-	 * @param tablutGame Current game
-	 * @param state Current state
-	 * @return Action that is been evaluated as best
-	 */
-	private Action findBestMove(GameAshtonTablut tablutGame, State state) {
 	
-	    //MyIterativeDeepeningAlphaBetaSearch search = new MyIterativeDeepeningAlphaBetaSearch(tablutGame, Double.MIN_VALUE, Double.MAX_VALUE, this.timeout - 2 );
-	    //search.setLogEnabled(debug);
-	    //return search.makeDecision(state);
-		return null;
-}
 }
