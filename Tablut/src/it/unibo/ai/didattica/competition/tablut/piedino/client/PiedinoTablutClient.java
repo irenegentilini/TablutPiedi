@@ -47,6 +47,7 @@ public class PiedinoTablutClient extends TablutClient {
 		case 0: 
 			state=new StateTablut();
 			rules=new PiedinoGameAshtonTablut(0, -1, "logs", "white_ai", "black_ai"); //FIXME non usiamo la classe AshtonTablutGame ma usiamo un adapter o altro
+			break;
 		default:
 			System.err.println("Game variant not recognized");
 			System.exit(-1);
@@ -84,6 +85,7 @@ public class PiedinoTablutClient extends TablutClient {
 		            // if is my turn (WHITE)
 	                // search the best move in search tree
 	                Action a = player.makeDecision(state);
+		            System.out.println(a);
 	                try {
 	                    this.write(a);
 	                } catch (ClassNotFoundException | IOException e) {

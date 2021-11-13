@@ -8,7 +8,7 @@ public class BlackPiedinoTablutClient {
 	public static void main(String[] ignore) throws UnknownHostException, IOException {
 		String[] args= {"black","piedino","60","localhost"};
 		//PiedinoTablutClient.main(args);
-		PiedinoTablutClient client=new PiedinoTablutClient("black","piedino",60,"localhost");
+		PiedinoTablutClient client=new PiedinoTablutClient("black","piedino",5,"localhost",0,true);
 		Thread t=new Thread(client);
 		t.start();
 	}

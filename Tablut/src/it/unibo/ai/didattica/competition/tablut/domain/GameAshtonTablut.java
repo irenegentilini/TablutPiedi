@@ -47,6 +47,7 @@ public class GameAshtonTablut implements Game {
 	public GameAshtonTablut(int repeated_moves_allowed, int cache_size, String logs_folder, String whiteName,
 			String blackName) {
 		this(new StateTablut(), repeated_moves_allowed, cache_size, logs_folder, whiteName, blackName);
+		
 	}
 
 	public GameAshtonTablut(State state, int repeated_moves_allowed, int cache_size, String logs_folder,
@@ -83,6 +84,7 @@ public class GameAshtonTablut implements Game {
 		loggGame.fine("Inizio partita");
 		loggGame.fine("Stato:\n" + state.toString());
 		drawConditions = new ArrayList<State>();
+		
 		this.citadels = new ArrayList<String>();
 		// this.strangeCitadels = new ArrayList<String>();
 		this.citadels.add("a4");
