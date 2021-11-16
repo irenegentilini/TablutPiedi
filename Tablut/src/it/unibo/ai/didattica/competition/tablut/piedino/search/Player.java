@@ -9,9 +9,17 @@ import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 
 public class Player  extends IterativeDeepeningAlphaBetaSearch<State,Action,Turn>{
 	
+	private boolean debug;
+	public Player(aima.core.search.adversarial.Game<State, Action, Turn> game, double utilMin, double utilMax,
+			int time,boolean debug) {
+		super(game, utilMin, utilMax, time);
+		this.debug=debug;
+		this.setLogEnabled(debug);
+	}
+	
 	public Player(aima.core.search.adversarial.Game<State, Action, Turn> game, double utilMin, double utilMax,
 			int time) {
-		super(game, utilMin, utilMax, time);
+		this(game, utilMin, utilMax, time,false);
 	}
 	
 	/**
@@ -30,7 +38,10 @@ public class Player  extends IterativeDeepeningAlphaBetaSearch<State,Action,Turn
     
     @Override
  	public Action makeDecision(State state) {
- 		return super.makeDecision(state);
+ 		Action a= super.makeDecision(state);
+ 		if (debug)
+ 	        System.out.println("Explored a total of " + getMetrics().get(METRICS_NODES_EXPANDED) + " nodes, reaching a depth limit of " + getMetrics().get(METRICS_MAX_DEPTH));
+ 		return a;
  	}	
 	
 }

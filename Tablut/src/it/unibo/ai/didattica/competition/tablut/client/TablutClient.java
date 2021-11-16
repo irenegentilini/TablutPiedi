@@ -164,7 +164,7 @@ public abstract class TablutClient implements Runnable {
 	}
 
 	public int getTimeout() {
-		return 0;
+		return this.timeout;
 	}
 	
 }

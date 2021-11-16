@@ -286,7 +286,7 @@ public class GameAshtonTablut implements Game {
 		int trovati = 0;
 		for (State s : drawConditions) {
 
-			System.out.println(s.toString());
+			//System.out.println(s.toString());
 
 			if (s.equals(state)) {
 				// DEBUG: //
@@ -320,7 +320,7 @@ public class GameAshtonTablut implements Game {
 		this.loggGame.fine("Current draw cache size: " + this.drawConditions.size());
 
 		this.loggGame.fine("Stato:\n" + state.toString());
-		System.out.println("Stato:\n" + state.toString());
+		//System.out.println("Stato:\n" + state.toString());
 
 		return state;
 	}

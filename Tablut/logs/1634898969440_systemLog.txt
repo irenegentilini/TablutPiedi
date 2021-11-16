@@ -1,8 +1,0 @@
-ott 22, 2021 12:36:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
-FINE: Accensione server
-ott 22, 2021 12:36:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
-FINE: Partita di Tablut
-ott 22, 2021 12:36:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
-FINE: Waiting for white connection..
-ott 22, 2021 12:41:12 PM it.unibo.ai.didattica.competition.tablut.server.Server run
-WARNING: Closing system for timeout!

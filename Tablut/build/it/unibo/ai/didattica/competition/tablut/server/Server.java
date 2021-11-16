@@ -666,8 +666,8 @@ public class Server implements Runnable {
 			}
 
 		}
-		
-		System.exit(0);
+		while(true) {}
+		//System.exit(0);
 	}
 
 }

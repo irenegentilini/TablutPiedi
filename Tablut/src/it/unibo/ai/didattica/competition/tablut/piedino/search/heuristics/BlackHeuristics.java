@@ -1,6 +1,8 @@
 package it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics;
 
 import it.unibo.ai.didattica.competition.tablut.domain.State;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
+
 import java.util.Random;
 public class BlackHeuristics extends Heuristics{
 
@@ -10,7 +12,7 @@ public class BlackHeuristics extends Heuristics{
 
 	@Override
 	public double evaluateState(State state) {
-		return new Random().nextInt()*10;
+		return 8.0/state.getNumberOf(Pawn.WHITE);
 	}
 
 }

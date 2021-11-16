@@ -6,6 +6,10 @@
     <target name="clean">
         <delete dir="build"/>
     </target>
+	
+	<target name="clearlogs">
+	    <delete dir="logs"/>
+	</target>
 
     <target name="compile">
         <mkdir dir="build"/>
@@ -29,6 +33,7 @@
                 <pathelement location="build"/>
             </classpath>
         	 <arg value="-g"/>
+       	 	 <arg value="--time 600"/>
         </java>
     </target>
     <target name="randomwhite">
@@ -85,7 +90,7 @@
 	            </classpath>
 	        </java>
 	    </target>
-	
+		
     <target name="tester">
         <java classname="it.unibo.ai.didattica.competition.tablut.tester.Tester" fork="true">
             <classpath>

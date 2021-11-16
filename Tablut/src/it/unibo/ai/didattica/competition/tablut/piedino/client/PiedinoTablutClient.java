@@ -39,6 +39,26 @@ public class PiedinoTablutClient extends TablutClient {
 	
 	@Override
 	public void run() {
+		System.out.println("_________________________________");
+		System.out.println("                             :            :\r\n"
+				+ "                             :            :\r\n"
+				+ "                             :            :\r\n"
+				+ "                             :            :\r\n"
+				+ "                             :            :\r\n"
+				+ "                            .'            :\r\n"
+				+ "                        _.-\"              :\r\n"
+				+ "                    _.-\"                  '.\r\n"
+				+ "    ..__...____...-\"                       :\r\n"
+				+ "   : \\_\\                                    :\r\n"
+				+ "   :    .--\"                                 :\r\n"
+				+ "   `.__/  .-\" _                               :\r\n"
+				+ "      /  /  ,\" ,-                            .'\r\n"
+				+ "     (_)(`,(_,'L_,_____       ____....__   _.'\r\n"
+				+ "      \"' \"             \"\"\"\"\"\"\"          \"\"\"");
+		System.out.println("Player name: " + this.getName());
+		System.out.println("Role: "+this.getPlayer());
+		System.out.println("Timeout: "+this.getTimeout());
+		System.out.println("_________________________________");
 		
 		State state=null;
 		aima.core.search.adversarial.Game<State,Action,Turn> rules=null;
@@ -59,7 +79,7 @@ public class PiedinoTablutClient extends TablutClient {
 			e.printStackTrace();
 		}
 				
-		player=new Player(rules, Double.MIN_VALUE,Double.MIN_VALUE,super.getTimeout()-2);
+		player=new Player(rules, Double.MIN_VALUE,Double.MIN_VALUE,super.getTimeout()-2,debug);
 		
 		state.setTurn(State.Turn.WHITE);
 		

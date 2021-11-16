@@ -124,13 +124,11 @@ public class PiedinoGameAshtonTablut extends GameAshtonTablut implements Cloneab
 								try {
 									this.checkMove(state.clone(), action);
 									possibleActions.add(action);
-									
-
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
 							} else {
-								// there is a pawn in the same column and it cannot be crossed
+								// there is a pawn in the same cell and it cannot be crossed
 								break;
 							}
 							
@@ -154,8 +152,9 @@ public class PiedinoGameAshtonTablut extends GameAshtonTablut implements Cloneab
 
 	@Override
 	public State getResult(State state, Action action) {
+		
 		try{
-			return super.checkMove(state,action);
+			return super.checkMove(state.clone(),action);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
