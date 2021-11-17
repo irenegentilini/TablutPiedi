@@ -33,6 +33,8 @@ public class Player  extends IterativeDeepeningAlphaBetaSearch<State,Action,Turn
         // needed to make heuristicEvaluationUsed = true, if the state evaluated isn't terminal
         super.eval(state, player);
         // return heuristic value for given state
+        //State.Turn turn=state.getTurn();
+		//System.out.println(turn.toString()+" - "+(turn.equals(Turn.BLACKWIN)||turn.equals(Turn.WHITEWIN)||turn.equals(Turn.DRAW))+" - "+game.getUtility(state, player));;
         return game.getUtility(state, player);
     } 
     

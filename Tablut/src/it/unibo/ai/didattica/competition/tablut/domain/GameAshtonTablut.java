@@ -281,7 +281,6 @@ public class GameAshtonTablut implements Game {
 			this.drawConditions.clear();
 			this.loggGame.fine("Capture! Draw cache cleared!");
 		}
-
 		// controllo pareggio
 		int trovati = 0;
 		for (State s : drawConditions) {
@@ -316,7 +315,6 @@ public class GameAshtonTablut implements Game {
 			this.drawConditions.remove(0);
 		}
 		this.drawConditions.add(state.clone());
-
 		this.loggGame.fine("Current draw cache size: " + this.drawConditions.size());
 
 		this.loggGame.fine("Stato:\n" + state.toString());

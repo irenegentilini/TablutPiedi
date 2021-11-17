@@ -79,7 +79,7 @@ public class PiedinoTablutClient extends TablutClient {
 			e.printStackTrace();
 		}
 				
-		player=new Player(rules, Double.MIN_VALUE,Double.MIN_VALUE,super.getTimeout()-2,debug);
+		player=new Player(rules, Double.MIN_VALUE,Double.MAX_VALUE,super.getTimeout()-2,debug);
 		
 		state.setTurn(State.Turn.WHITE);
 		
