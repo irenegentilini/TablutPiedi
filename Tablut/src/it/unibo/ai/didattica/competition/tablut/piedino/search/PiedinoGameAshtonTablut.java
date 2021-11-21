@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.io.IOException;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristics;
+import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristicsBrainmates;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.Heuristics;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.WhiteHeuristics;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.WhiteHeuristicsBrainmates;
@@ -361,7 +362,7 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 		// ho il re sotto
 		if (a.getRowTo() < state.getBoard().length - 2
 				&& state.getPawn(a.getRowTo() + 1, a.getColumnTo()).equalsPawn("K")) {
-			System.out.println("Ho il re sotto");
+			//System.out.println("Ho il re sotto");
 			// re sul trono
 			if (state.getBox(a.getRowTo() + 1, a.getColumnTo()).equals("e5")) {
 				if (state.getPawn(5, 4).equalsPawn("B") && state.getPawn(4, 5).equalsPawn("B")
@@ -845,7 +846,7 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 									this.checkPossibleMove(state.clone(), action);
 									possibleActions.add(action);
 								} catch (Exception e) {
-									e.printStackTrace();
+									//Do nothing
 								}
 							} else {
 								// there is a pawn in the same cell and it cannot be crossed
@@ -880,10 +881,9 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 //			e.printStackTrace();
 //			return null;
 //		}
-		// se sono arrivato qui, muovo la pedina
-		state = this.movePawn(state, action);
 
-		// a questo punto controllo lo stato per eventuali catture
+		state = this.movePawn(state.clone(), action);
+
 		if (state.getTurn().equalsTurn("W")) {
 			state = this.checkCaptureBlack(state, action);
 		} else if (state.getTurn().equalsTurn("B")) {
@@ -903,13 +903,27 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 				|| (turn.equals(State.Turn.WHITE) && state.getTurn().equals(State.Turn.BLACKWIN)))
 			return Double.NEGATIVE_INFINITY;
 
-
+		//ONLY FOR DEBUG PURPOSES
+		boolean brainmates=true;
+		if(brainmates) {
+			if (turn.equals(State.Turn.WHITE)) {
+//				Heuristics heu = new WhiteHeuristics();
+//				return heu.evaluateState(state);
+				WhiteHeuristicsBrainmates heu=new WhiteHeuristicsBrainmates(state);
+				return heu.evaluateState();
+			} else {
+				Heuristics heu = new BlackHeuristics();
+				return heu.evaluateState(state);
+//				BlackHeuristicsBrainmates heu=new BlackHeuristicsBrainmates(state);
+//				return heu.evaluateState();
+			}
+		}
+		
+		
 		// if it isn't a terminal state
 		Heuristics heuristics = null;
 		if (turn.equals(State.Turn.WHITE)) {
-			//heuristics = new WhiteHeuristics();
-			WhiteHeuristicsBrainmates heu=new WhiteHeuristicsBrainmates(state);
-			return heu.evaluateState();
+			heuristics = new WhiteHeuristics();
 		} else {
 			heuristics = new BlackHeuristics();
 		}
