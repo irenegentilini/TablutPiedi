@@ -12,7 +12,7 @@ public class BlackHeuristics extends Heuristics{
 
 	@Override
 	public double evaluateState(State state) {
-		return 8.0/state.getNumberOf(Pawn.WHITE);
+		return 8.0/state.getNumberOf(Pawn.WHITE)+1;
 	}
 
 }
