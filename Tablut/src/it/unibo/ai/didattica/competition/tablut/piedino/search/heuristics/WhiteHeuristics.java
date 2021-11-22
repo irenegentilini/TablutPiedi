@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
 public class WhiteHeuristics extends Heuristics {
 	
-	public final static int NUM_BLACK = 16;
-	public final static int NUM_WHITE = 8;  //come le variabili di gameashton tablut
+	public final static double NUM_BLACK = 16.0;
+	public final static double NUM_WHITE = 8.0;  //come le variabili di gameashton tablut
 	
 	private final String BEST_POSITIONS = "bestPositions";
 	private final String EATEN_BLACK = "eatenBlack";
@@ -50,20 +49,19 @@ public class WhiteHeuristics extends Heuristics {
 		super();
 		weights=new HashMap<String,Double>();
 		weights.put(BEST_POSITIONS, 10.0);
-		weights.put(EATEN_BLACK,50.0);
+		weights.put(EATEN_BLACK,10.0);
 		weights.put(WHITE_LEFT, 7.0);
 		weights.put(NUMBER_OF_ESCAPES, 10.0);
 		weights.put(ENCIRCLEMENT, 10.0);
-		weights.put(KING_IN_CASTLE, 15.0);
+		weights.put(KING_IN_CASTLE, 20.0);
 		weights.put(KING_NEAR_CASTLE, 2.0);
 	}
 
 	@Override
 	public double evaluateState(State state) {
-		double totalWeight=weights.values().stream().mapToDouble(f->f).sum();
 		double numEscapes= ((numberOfKingEscapes(state))/4) * weights.get(NUMBER_OF_ESCAPES);
-		if (numEscapes>1) 
-			return Double.POSITIVE_INFINITY;
+//		if (numEscapes>1) 
+//			return Double.POSITIVE_INFINITY;
 		
 		double encirclement= (countBlackNearKing(state)/4) * weights.get(ENCIRCLEMENT);
 		
@@ -71,12 +69,12 @@ public class WhiteHeuristics extends Heuristics {
 		
 		double numWhite=(state.getNumberOf(State.Pawn.WHITE)/NUM_WHITE) * weights.get(WHITE_LEFT);
 		
-		double kingInCastle = isKingInCastle(state) ? 1.0 : 0.0;
+		double kingInCastle = (isKingInCastle(state) ? 1.0 : 0.0) * weights.get(KING_IN_CASTLE);
 		
 		int[] kingPos = findKing(state);
-		double kingNearCastle = nearCastle.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0;
+		double kingNearCastle = (nearCastle.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_NEAR_CASTLE);
 		
-		return (encirclement+numEscapes+eatenBlack+numWhite+kingInCastle+kingNearCastle)/totalWeight;
+		return encirclement+numEscapes+eatenBlack+numWhite+kingInCastle+kingNearCastle;
 	}
 	
 

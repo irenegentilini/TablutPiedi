@@ -5,11 +5,10 @@ import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 public class BlackHeuristics extends Heuristics{
 	
-	public final static int NUM_BLACK = 16;
-	public final static int NUM_WHITE = 8;  //come le variabili di gameashton tablut
+	public final static double NUM_BLACK = 16.0;
+	public final static double NUM_WHITE = 8.0;  //come le variabili di gameashton tablut
 	
 	private final String BEST_POSITIONS = "bestPositions";
 	private final String EATEN_WHITE = "eatenWhite";
@@ -36,18 +35,17 @@ public class BlackHeuristics extends Heuristics{
 
 	@Override
 	public double evaluateState(State state) {
-		double totalWeight=weights.values().stream().mapToDouble(f->f).sum();
 		double numEscapesBlocked= ((4 - numberOfKingEscapes(state))/4) * weights.get(NUMBER_OF_ESCAPES);
-		if (numEscapesBlocked<3) 
-			return Double.NEGATIVE_INFINITY;
-		
+//		if (numEscapesBlocked<3) 
+//			return Double.NEGATIVE_INFINITY;
+//		
 		double encirclement= (countBlackNearKing(state)/4) * weights.get(ENCIRCLEMENT);
 		
 		double eatenWhite= ((NUM_WHITE - state.getNumberOf(State.Pawn.WHITE))/NUM_WHITE) * weights.get(EATEN_WHITE);// FIXME metti il numero tot di white come variabile presa da boh
 		
 		double numBlack=(state.getNumberOf(State.Pawn.BLACK)/NUM_BLACK) * weights.get(BLACK_LEFT);
 		
-		return (encirclement+numEscapesBlocked+eatenWhite+numBlack)/totalWeight;
+		return encirclement+numEscapesBlocked+eatenWhite+numBlack;
 		
 	}
 
