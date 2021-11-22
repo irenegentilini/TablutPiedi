@@ -1,10 +1,9 @@
 package it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics;
 
 import it.unibo.ai.didattica.competition.tablut.domain.State;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
-
 import java.util.HashMap;
 import java.util.Map;
+
 public class BlackHeuristics extends Heuristics{
 	
 	public final static double NUM_BLACK = 16.0;

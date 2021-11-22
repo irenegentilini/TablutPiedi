@@ -19,6 +19,7 @@ public class WhiteHeuristics extends Heuristics {
 	private final String ENCIRCLEMENT="encirclement";
 	private final String KING_IN_CASTLE = "kingInCastle";
 	private final String KING_NEAR_CASTLE = "kingNearCastle";  //da valutare se è utile
+	private final String KING_ESCAPE_POSITION="kingEscapePosition";
 	
 	private List<String> nearCastle = Arrays.asList(
 			"e4",
@@ -28,33 +29,37 @@ public class WhiteHeuristics extends Heuristics {
 			);
 	
 	private final Map<String,Double> weights;
-	
-	/*
-    private final String BEST_POSITIONS = "bestPositions";
-    private final String BLACK_EATEN = "numberOfBlackEaten";
-    private final String WHITE_ALIVE = "numberOfWhiteAlive";
-    private final String NUM_ESCAPES_KING = "numberOfWinEscapesKing";
-    private final String BLACK_SURROUND_KING = "blackSurroundKing";
-    private final String PROTECTION_KING = "protectionKing";
 
+	private final List<String> bestEscapePositions = Arrays.asList(
+			"c3",
+			"c7",
+			"g3",
+			"g7"			
+			);
 	
-    private final static int[][] bestWhitePositions = {
-            {2,3},  {3,5},
-            {5,3},  {6,5}
-    };
+	private final List<String> rhombus = Arrays.asList(
+			//"e3",
+			"d4",
+			"f4",
+			//"c5",
+			//"g5",
+			"d6",
+			"f6"
+			//"e7"
+			);
 
-    private final static int WHITE_POSITION = bestWhitePositions.length;
-	*/
+
 	public WhiteHeuristics() {
 		super();
 		weights=new HashMap<String,Double>();
-		weights.put(BEST_POSITIONS, 10.0);
+		weights.put(BEST_POSITIONS, 1.0);
 		weights.put(EATEN_BLACK,10.0);
 		weights.put(WHITE_LEFT, 7.0);
 		weights.put(NUMBER_OF_ESCAPES, 10.0);
-		weights.put(ENCIRCLEMENT, 10.0);
-		weights.put(KING_IN_CASTLE, 20.0);
-		weights.put(KING_NEAR_CASTLE, 2.0);
+		weights.put(ENCIRCLEMENT, 5.0);
+		weights.put(KING_IN_CASTLE, 2.0);
+		weights.put(KING_NEAR_CASTLE, 1.0);
+		weights.put(KING_ESCAPE_POSITION,2.0);
 	}
 
 	@Override
@@ -74,7 +79,10 @@ public class WhiteHeuristics extends Heuristics {
 		int[] kingPos = findKing(state);
 		double kingNearCastle = (nearCastle.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_NEAR_CASTLE);
 		
-		return encirclement+numEscapes+eatenBlack+numWhite+kingInCastle+kingNearCastle;
+		double escapePosition = (bestEscapePositions.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_ESCAPE_POSITION);
+		double pawnsFormation= (rhombus.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)rhombus.size())*weights.get(BEST_POSITIONS);
+		
+		return encirclement+numEscapes+eatenBlack+numWhite+kingInCastle+kingNearCastle+escapePosition+pawnsFormation;
 	}
 	
 

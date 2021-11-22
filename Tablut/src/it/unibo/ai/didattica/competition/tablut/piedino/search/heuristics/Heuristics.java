@@ -1,13 +1,8 @@
 package it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
-import it.unibo.ai.didattica.competition.tablut.piedino.search.PiedinoGameAshtonTablut;
 
 public abstract class Heuristics {
 
@@ -34,7 +29,12 @@ public abstract class Heuristics {
 	public List<String> getEscapes() {
 		return escapes;
 	}
-
+	
+	public State.Pawn getPawnAt(State state,String box) {
+		int i=box.charAt(0)-'a';
+		int j=Integer.parseInt(box.substring(1))-1;
+		return state.getPawn(i, j);
+	}
 	public abstract double evaluateState(State state);
 	
 	

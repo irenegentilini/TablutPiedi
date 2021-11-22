@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -580,6 +581,9 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 	}
 
 	private List<Action> sortActionList (List<Action> actions) {
+		
+//		if (actions.size()>0 && actions.get(0).getTurn().equals(Turn.WHITE))
+//			Collections.reverse(actions);
 		return actions;
 	}
 

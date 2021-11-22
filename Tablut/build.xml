@@ -30,7 +30,7 @@
                 <pathelement location="build"/>
             </classpath>
         	 <arg value="-g"/>
-       	 	 <arg value="--time 600"/>
+       	 	 <arg value="--time 60"/>
         </java>
     </target>
     
