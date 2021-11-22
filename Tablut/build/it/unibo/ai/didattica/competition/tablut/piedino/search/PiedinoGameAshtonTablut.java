@@ -881,10 +881,9 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 //			e.printStackTrace();
 //			return null;
 //		}
-		// se sono arrivato qui, muovo la pedina
+
 		state = this.movePawn(state.clone(), action);
 
-		// a questo punto controllo lo stato per eventuali catture
 		if (state.getTurn().equalsTurn("W")) {
 			state = this.checkCaptureBlack(state, action);
 		} else if (state.getTurn().equalsTurn("B")) {
@@ -892,7 +891,6 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 		}
 		return state;
 	}
-
 
 	@Override
 	public double getUtility(State state, Turn turn) {
@@ -919,7 +917,6 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 //				return heu.evaluateState();
 			}
 		}
-		
 		
 		// if it isn't a terminal state
 		Heuristics heuristics = null;

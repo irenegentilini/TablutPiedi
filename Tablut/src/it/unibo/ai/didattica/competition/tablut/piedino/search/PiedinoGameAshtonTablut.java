@@ -892,7 +892,6 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 		return state;
 	}
 
-
 	@Override
 	public double getUtility(State state, Turn turn) {
 		// if it is a terminal state
@@ -918,7 +917,6 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 //				return heu.evaluateState();
 			}
 		}
-		
 		
 		// if it isn't a terminal state
 		Heuristics heuristics = null;

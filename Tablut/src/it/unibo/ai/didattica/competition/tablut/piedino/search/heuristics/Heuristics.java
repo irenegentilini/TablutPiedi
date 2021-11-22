@@ -2,6 +2,8 @@ package it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
@@ -9,7 +11,33 @@ import it.unibo.ai.didattica.competition.tablut.piedino.search.PiedinoGameAshton
 
 public abstract class Heuristics {
 
+	private List<String> escapes = Arrays.asList(
+			"b1",
+			"c1",
+			"g1",
+			"h1",			
+			"a2",
+			"a3",
+			"a7",
+			"a8",		
+			"i2",
+			"i3",
+			"i7",
+			"i8",
+			"b9",
+			"c9",
+			"g9",
+			"h9"
+			);
+
+	
+	public List<String> getEscapes() {
+		return escapes;
+	}
+
 	public abstract double evaluateState(State state);
+	
+	
 	
 	/*
 	 * For white player -> numero pedino
@@ -20,11 +48,11 @@ public abstract class Heuristics {
 	 * Posizione bianchi + posizione nere
 	 */
 	
-	public boolean checkKingInCastle(State state) {
+	public boolean isKingInCastle(State state) {
 		return state.getPawn(4,4).equalsPawn("K");
 	}
 	
-	public int checkBlackNearKing(State state) {
+	public int countBlackNearKing(State state) {
 		int[] king = findKing(state);
 		int rowIncr[] = {1, 0, -1, 0}; 
 		int colIncr[] = {0, 1, 0, -1};
@@ -41,38 +69,17 @@ public abstract class Heuristics {
 		return result;
 	}
 	
-	public int numberOfKingExit(State state) {
+	public int numberOfKingEscapes(State state) {
 		int result = 0;
 		int rowIncr[] = {1, 0, -1, 0}; 
 		int colIncr[] = {0, 1, 0, -1};
 		int[] king = findKing(state);
 		int i = king[0];
 		int j = king[1];
-		
-		ArrayList<String> escapes = new ArrayList<String>();
 
-		escapes.add("b1");
-		escapes.add("c1");
-		escapes.add("g1");
-		escapes.add("h1");
-		escapes.add("a2");
-		escapes.add("a3");
-		escapes.add("a7");
-		escapes.add("a8");
-		
-		escapes.add("i2");
-		escapes.add("i3");
-		escapes.add("i7");
-		escapes.add("i8");
-		
-		escapes.add("b9");
-		escapes.add("c9");
-		escapes.add("g9");
-		escapes.add("h9");
-
-		for(int z=0; z < 4 ;z++) { //4 length of rowIncr, colIncr
-			int rIncr = rowIncr[z];
-			int cIncr = colIncr[z];
+		for(int k=0; k < 4 ;k++) { //4 length of rowIncr, colIncr
+			int rIncr = rowIncr[k];
+			int cIncr = colIncr[k];
 			
 			int rBound = rIncr > 0 ? state.getBoard().length : -1;
 			int cBound = cIncr > 0 ? state.getBoard().length : -1;
@@ -82,20 +89,16 @@ public abstract class Heuristics {
 			
 			// search on top of pawn
 			while(row != rBound && col != cBound) {
-			
-			/*	// break if pawn is out of citadels and it is moving on a citadel
-				if (!citadels.contains(state.getBox(i, j)) && citadels.contains(state.getBox(row, col))) {
-					break;
-				}*/
-
-				// check if we are moving on a empty cell
+		
+				// check if the cell is an escape cell
 				if (escapes.contains(state.getBox(row, col))) {
 
-					result ++; //know how much escapes for the king are available
+					result ++; 
 					
-				} else if(!state.getPawn(row, col).equalsPawn(State.Pawn.EMPTY.toString()) && state.getPawn(row, col).equalsPawn(State.Pawn.THRONE.toString())){
+				//} else if(!state.getPawn(row, col).equalsPawn(State.Pawn.EMPTY.toString()) && state.getPawn(row, col).equalsPawn(State.Pawn.THRONE.toString())){
+				} else if(!state.getBoard()[row][col].equals(State.Pawn.EMPTY)) {
 					// there is a pawn in the same cell and it cannot be crossed
-					System.out.println("Can't cross the throne!!!");
+					//System.out.println(state.getBoard()[row][col]);
 					break;
 				}
 				
