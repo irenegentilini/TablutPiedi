@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 public class WhitePiedinoTablutClient {
 
 	public static void main(String[] ignore) throws UnknownHostException, IOException {
-		PiedinoTablutClient client=new PiedinoTablutClient("white","piedino",60,"localhost",0,true);
+		PiedinoTablutClient client=new PiedinoTablutClient("white","piedino",20,"localhost",0,true);
 		Thread t=new Thread(client);
 		t.start();
 	}

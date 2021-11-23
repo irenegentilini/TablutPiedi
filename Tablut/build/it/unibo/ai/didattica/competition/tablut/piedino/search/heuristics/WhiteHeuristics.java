@@ -53,13 +53,13 @@ public class WhiteHeuristics extends Heuristics {
 		super();
 		weights=new HashMap<String,Double>();
 		weights.put(BEST_POSITIONS, 1.0);
-		weights.put(EATEN_BLACK,10.0);
-		weights.put(WHITE_LEFT, 7.0);
-		weights.put(NUMBER_OF_ESCAPES, 10.0);
-		weights.put(ENCIRCLEMENT, 5.0);
-		weights.put(KING_IN_CASTLE, 2.0);
-		weights.put(KING_NEAR_CASTLE, 1.0);
-		weights.put(KING_ESCAPE_POSITION,2.0);
+		weights.put(EATEN_BLACK,20.0);
+		weights.put(WHITE_LEFT, 14.0);
+		weights.put(NUMBER_OF_ESCAPES, 20.0);
+		weights.put(ENCIRCLEMENT, 6.0);
+		weights.put(KING_IN_CASTLE, 3.0);
+		weights.put(KING_NEAR_CASTLE, 2.0);
+		weights.put(KING_ESCAPE_POSITION,4.0);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class WhiteHeuristics extends Heuristics {
 //		if (numEscapes>1) 
 //			return Double.POSITIVE_INFINITY;
 		
-		double encirclement= (countBlackNearKing(state)/4) * weights.get(ENCIRCLEMENT);
+		double encirclement= ((4.0-countBlackNearKing(state))/4) * weights.get(ENCIRCLEMENT);
 		
 		double eatenBlack= ((NUM_BLACK - state.getNumberOf(State.Pawn.BLACK))/NUM_BLACK) * weights.get(EATEN_BLACK);// FIXME metti il numero tot di white come variabile presa da boh
 		
@@ -82,6 +82,9 @@ public class WhiteHeuristics extends Heuristics {
 		double escapePosition = (bestEscapePositions.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_ESCAPE_POSITION);
 		double pawnsFormation= (rhombus.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)rhombus.size())*weights.get(BEST_POSITIONS);
 		
+		if(hasWhiteSafeWin(state)) {
+			System.out.println("Safe win!!\n"+state.toString());
+		}
 		return encirclement+numEscapes+eatenBlack+numWhite+kingInCastle+kingNearCastle+escapePosition+pawnsFormation;
 	}
 	
