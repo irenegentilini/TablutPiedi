@@ -124,37 +124,54 @@ public abstract class Heuristics {
         }
         return kingCoord;
 	}
-	/*
-	public boolean hasSafeWin(State state) { 
-		boolean isSafe;
-		if(numberOfKingEscapes(state) > 1) {
-			int rowIncr[] = {1, 0, -1, 0}; 
-			int colIncr[] = {0, 1, 0, -1};
-			int[] kingPosition = findKing(state);
-			
-			if(state.getPawn(kingPosition[0]-1, kingPosition[1]).equalsPawn("B")) {
-				for(int i=0; i < kingPosition[0]+1; i++ ) {
-					
-				}
-			}
-			 
-			if(state.getPawn(kingPosition[0]+1, kingPosition[1]).equalsPawn("B")) {
-			
-			}
-						
-			if(state.getPawn(kingPosition[0], kingPosition[1]-1).equalsPawn("B")) {
-				
-			}
-			
-			if(state.getPawn(kingPosition[0], kingPosition[1]+1).equalsPawn("B")) {
-				
-			}
-
-		} else {
-			return false;
-		}
-	}*/
 	
-
+	
+//	private Pawn[] getRow(State state, int pos) {
+//		State.Pawn[][] board=state.getBoard();
+//		StringBuilder sb=new StringBuilder("");
+//		for(int i=0;i<board.length;i++) {
+//			sb.append(board[pos][i].toString());
+//		}
+//	}
+//	
+//	private Pawn[] getCol(State state, int pos) {
+//		return "";
+//	}
+   
+//	private boolean canBlackAttackPos(State state, int row,int col) {
+//		int rowIncr[] = {1, 0, -1, 0}; 
+//		int colIncr[] = {0, 1, 0, -1};
+//		State.Pawn[][] board=state.getBoard();
+//		for (int i=0;i<4;i++) {
+//			int rIncr=rowIncr[i];
+//			int cIncr=colIncr[i];
+//			int rBound = rIncr > 0 ? state.getBoard().length : -1;
+//			int cBound = cIncr > 0 ? state.getBoard().length : -1;
+//			int r = row + rIncr;
+//			int c = col + cIncr;
+//			
+//			// search on top of pawn
+//			while(r != rBound && c != cBound) {
+//				if(board[r][c].equalsPawn("B")) return true;
+//				else if(!board[r][c].equalsPawn("O")) break;
+//				r += rIncr;
+//				c += cIncr;
+//			}
+//		}	
+//		return false;
+//	}
+//	
+//	public boolean hasWhiteSafeWin(State state) {
+//		if(numberOfKingEscapes(state)>1) {
+//			int[] king=findKing(state);
+//			if (canBlackAttackPos(state,king[0]-1,king[1])) return false;
+//			if (canBlackAttackPos(state,king[0]+1,king[1])) return false;
+//			if (canBlackAttackPos(state,king[0],king[1]-1)) return false;
+//			if (canBlackAttackPos(state,king[0],king[1]+1)) return false;
+//			return true;
+//		}
+//		return false;
+//	}
+//	
 }
 

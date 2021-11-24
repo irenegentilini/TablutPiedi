@@ -5,14 +5,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.stream.IntStream;
 import java.io.IOException;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristics;
+import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristicsBrainmates;
 //import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristicsBrainmates;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.Heuristics;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.WhiteHeuristics;
@@ -20,6 +23,7 @@ import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.WhiteH
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.Game;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.exceptions.*;
@@ -800,15 +804,17 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 		int rowIncr[] = {1, 0, -1, 0}; //rowIncr from aima library 
 		int colIncr[] = {0, 1, 0, -1};
 
-
 		List<Action> possibleActions = new ArrayList<Action>();
-
-		for (int i = 0; i < state.getBoard().length; i++) { //rows of the board
-			for (int j = 0; j < state.getBoard().length; j++) { //col of the board
-
-				// if pawn color  is equal of turn color
-				if (state.getPawn(i, j).toString().equals(turn.toString()) ||
-						(state.getPawn(i, j).equals(State.Pawn.KING) && turn.equals(State.Turn.WHITE)) ) {
+		Pawn pawns=state.getTurn().equals(Turn.BLACK)?Pawn.BLACK:Pawn.WHITE;
+		for (Integer []pos : getPositionsOf(state, pawns)){
+			int i=pos[0];
+			int j=pos[1];
+			
+//		for (int i = 0; i < state.getBoard().length; i++) { //rows of the board
+//			for (int j = 0; j < state.getBoard().length; j++) { //col of the board
+//				// if pawn color  is equal of turn color
+//				if (state.getPawn(i, j).toString().equals(turn.toString()) ||
+//						(state.getPawn(i, j).equals(State.Pawn.KING) && turn.equals(State.Turn.WHITE)) ) {
 
 					for(int k=0; k < 4 ;k++) { //4 length of rowIncr, colIncr
 						int rIncr = rowIncr[k];
@@ -863,8 +869,8 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 					}
 
 				}
-			}
-		}
+			//} //Decommenta se vuoi tornare a ricerca normale
+		//}//Decommenta se vuoi tornare a ricerca normale
 		return sortActionList(possibleActions);
 	}
 
@@ -907,7 +913,7 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 			return Double.NEGATIVE_INFINITY;
 
 		//ONLY FOR DEBUG PURPOSES
-		boolean brainmates=false;
+		boolean brainmates=true;
 		if(brainmates) {
 			if (turn.equals(State.Turn.WHITE)) {
 				Heuristics heu = new WhiteHeuristics();
@@ -915,10 +921,10 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 				   //WhiteHeuristicsBrainmates heu=new WhiteHeuristicsBrainmates(state);
 				return heu.evaluateState(state);
 			} else {
-				Heuristics heu = new BlackHeuristics();
-				return heu.evaluateState(state);
-//				BlackHeuristicsBrainmates heu=new BlackHeuristicsBrainmates(state);
-//				return heu.evaluateState();
+//				Heuristics heu = new BlackHeuristics();
+//				return heu.evaluateState(state);
+				BlackHeuristicsBrainmates heu=new BlackHeuristicsBrainmates(state);
+				return heu.evaluateState();
 			}
 		}
 		
@@ -930,6 +936,26 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 			heuristics = new BlackHeuristics();
 		}
 		return  heuristics.evaluateState(state);		
+	}
+	
+	public List<Integer[]> getPositionsOf(State state, State.Pawn pawn){
+		String strState=state.toLinearString().substring(0, 81);
+		int pos=0;
+		int boardsize=state.getBoard().length;
+		List<Integer[]> result=new ArrayList<>();
+		while((pos=strState.indexOf(pawn.toString(),pos))>0){
+			result.add(new Integer[]{pos/boardsize,pos%boardsize});
+			pos+=1;
+		}
+		Integer king[]= {strState.indexOf("K")/boardsize,strState.indexOf("K")%boardsize};
+		if (pawn.equals(Pawn.WHITE)) result.add(king);
+		Collections.sort(result,(p1,p2)->{
+			int dist1=Math.max(Math.abs(p1[0]-king[0]),Math.abs(p1[1]-king[1]));
+			int dist2=Math.max(Math.abs(p2[0]-king[0]),Math.abs(p2[1]-king[1]));
+			return dist1-dist2;
+		});
+		
+		return result;
 	}
 }
 

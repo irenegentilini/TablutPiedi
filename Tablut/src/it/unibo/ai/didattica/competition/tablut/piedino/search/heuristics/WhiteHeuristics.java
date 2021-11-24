@@ -37,7 +37,7 @@ public class WhiteHeuristics extends Heuristics {
 			"g7"			
 			);
 	
-	private final List<String> rhombus = Arrays.asList(
+	private final List<String> square = Arrays.asList(
 			//"e3",
 			"d4",
 			"f4",
@@ -47,43 +47,66 @@ public class WhiteHeuristics extends Heuristics {
 			"f6"
 			//"e7"
 			);
+	
+	private final List<String> rectangleH = Arrays.asList(
+			"b4",
+			"h4",
+			"b6",
+			"h6"
+			);
+	
+	private final List<String> rectangleV = Arrays.asList(
+			"d2",
+			"f2",
+			"d8",
+			"f8"
+			);
+
 
 
 	public WhiteHeuristics() {
 		super();
 		weights=new HashMap<String,Double>();
-		weights.put(BEST_POSITIONS, 1.0);
-		weights.put(EATEN_BLACK,10.0);
-		weights.put(WHITE_LEFT, 7.0);
-		weights.put(NUMBER_OF_ESCAPES, 10.0);
-		weights.put(ENCIRCLEMENT, 5.0);
-		weights.put(KING_IN_CASTLE, 2.0);
-		weights.put(KING_NEAR_CASTLE, 1.0);
-		weights.put(KING_ESCAPE_POSITION,2.0);
+		weights.put(BEST_POSITIONS, 2.0);
+		weights.put(EATEN_BLACK,20.0);
+		weights.put(WHITE_LEFT, 14.0);
+		weights.put(NUMBER_OF_ESCAPES, 20.0);
+		weights.put(ENCIRCLEMENT, 2.0);
+		weights.put(KING_IN_CASTLE, 3.0);
+		weights.put(KING_NEAR_CASTLE, 2.0);
+		weights.put(KING_ESCAPE_POSITION,4.0);
 	}
 
 	@Override
 	public double evaluateState(State state) {
-		double numEscapes= ((numberOfKingEscapes(state))/4) * weights.get(NUMBER_OF_ESCAPES);
-//		if (numEscapes>1) 
-//			return Double.POSITIVE_INFINITY;
-		
-		double encirclement= (countBlackNearKing(state)/4) * weights.get(ENCIRCLEMENT);
+		double numEscapes= Math.pow(numberOfKingEscapes(state)/4.0,2) * weights.get(NUMBER_OF_ESCAPES);
+		//double encirclement= ((4.0-countBlackNearKing(state))/4) * weights.get(ENCIRCLEMENT);
+		double encirclement=0.0;
 		
 		double eatenBlack= ((NUM_BLACK - state.getNumberOf(State.Pawn.BLACK))/NUM_BLACK) * weights.get(EATEN_BLACK);// FIXME metti il numero tot di white come variabile presa da boh
 		
 		double numWhite=(state.getNumberOf(State.Pawn.WHITE)/NUM_WHITE) * weights.get(WHITE_LEFT);
 		
 		double kingInCastle = (isKingInCastle(state) ? 1.0 : 0.0) * weights.get(KING_IN_CASTLE);
+		//double kingInCastle=0.0;
 		
 		int[] kingPos = findKing(state);
-		double kingNearCastle = (nearCastle.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_NEAR_CASTLE);
+		//double kingNearCastle = (nearCastle.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_NEAR_CASTLE);
+		double kingNearCastle=0.0;
 		
-		double escapePosition = (bestEscapePositions.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_ESCAPE_POSITION);
-		double pawnsFormation= (rhombus.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)rhombus.size())*weights.get(BEST_POSITIONS);
+		//double escapePosition = (bestEscapePositions.contains(state.getBox(kingPos[0], kingPos[1])) ? 1.0 : 0.0)*weights.get(KING_ESCAPE_POSITION);
+		double escapePosition=0.0;
+		
+		double pawnsFormation= calcPawnFormationSupport(state)*weights.get(BEST_POSITIONS);
 		
 		return encirclement+numEscapes+eatenBlack+numWhite+kingInCastle+kingNearCastle+escapePosition+pawnsFormation;
 	}
 	
+	private double calcPawnFormationSupport(State state) {
+		double squareVal=(square.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)square.size());
+		double recHVal=(rectangleH.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)rectangleH.size());
+		double recVVal=(rectangleV.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)rectangleV.size());
+		return (0.5*(recHVal+recVVal)+squareVal)/2;	
+	}
 
 }
