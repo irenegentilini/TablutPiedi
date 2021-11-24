@@ -36,29 +36,92 @@ public class PiedinoTablutClient extends TablutClient {
 		this(player,name,60,"localhost",0,false);
 	}
 	
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		String pawn = "";
+		String teamName = "Piedino";
+		String ipAddress = "localhost";
+		int timeout = 60;
+		boolean debug = false;
+		
+		if(args.length < 1 || (!args[0].equalsIgnoreCase("black") && !args[0].equalsIgnoreCase("white"))) {
+			System.out.println("You have to specify which role you want to play Black | White");
+			System.exit(-1);
+		} else {
+				pawn = args[0];
+		}
+		
+		if(args.length > 1) {
+		
+            try {
+                timeout = Integer.parseInt(args[1]);
+                if(timeout <= 2) {
+                	System.out.println("Match timeout must be an integer number bigger than 2");
+                	System.exit(-1);
+                }
+            } catch (Exception e){
+                System.out.println("Match timeout must be an integer number bigger than 2");
+                	e.printStackTrace();
+	                System.exit(-1);   
+            }
+		}
+              
+        if(args.length > 2) {
+            	ipAddress = args[2];
+         }
+		
+		if(args.length > 3) {
+            if(args[3].equalsIgnoreCase("debug")) {
+                debug = true;
+            } else {
+                System.out.println(args[3] + " :not recognized, debug is now disabled");
+                
+            }
+			
+		}
+	
+        PiedinoTablutClient client = new PiedinoTablutClient(pawn, teamName, timeout, ipAddress,0 ,debug);
+        client.run();
+
+	
+	}
+	
 	
 	@Override
 	public void run() {
-		System.out.println("_________________________________");
-		System.out.println("                             :            :\r\n"
-				+ "                             :            :\r\n"
-				+ "                             :            :\r\n"
-				+ "                             :            :\r\n"
-				+ "                             :            :\r\n"
-				+ "                            .'            :\r\n"
-				+ "                        _.-\"              :\r\n"
-				+ "                    _.-\"                  '.\r\n"
-				+ "    ..__...____...-\"                       :\r\n"
-				+ "   : \\_\\                                    :\r\n"
-				+ "   :    .--\"                                 :\r\n"
-				+ "   `.__/  .-\" _                               :\r\n"
-				+ "      /  /  ,\" ,-                            .'\r\n"
-				+ "     (_)(`,(_,'L_,_____       ____....__   _.'\r\n"
-				+ "      \"' \"             \"\"\"\"\"\"\"          \"\"\"");
-		System.out.println("Player name: " + this.getName());
-		System.out.println("Role: "+this.getPlayer());
-		System.out.println("Timeout: "+this.getTimeout());
-		System.out.println("_________________________________");
+		
+		System.out.println("════════════════════════════════════════════════════════════════════");
+		System.out.println("   ♥╣[-_-]╠♥♥╣[-_-]╠♥♥╣[-_-]╠♥♥╣[-_-]╠♥♥╣[-_-]╠♥♥╣[-_-]╠♥♥╣[-_-]╠♥");
+		System.out.println("════════════════════════════════════════════════════════════════════");
+		System.out.println("   ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ♥ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ");
+		System.out.println("════════════════════════════════════════════════════════════════════");
+		System.out.println(" ლ(=ↀωↀ=)ლ ლ(=ↀωↀ=)ლ ლ(=ↀωↀ=)ლ ლ(=ↀωↀ=)ლ ლ(=ↀωↀ=)ლ ლ(=ↀωↀ=)ლ");
+
+		System.out.print(
+				  "╔═══════════════════════════════════════════════════════════════════╗\n"+
+				  "║                              :            :                       ║\n"							   	
+				+ "║                              :            :                       ║\n"
+				+ "║                              :            :                       ║\n"
+				+ "║                              :            :                       ║\n"
+				+ "║                             .'            :                       ║\n"
+				+ "║                         _.-\"              :                       ║\n"
+				+ "║                     _.-\"                  '.                      ║\n"
+				+ "║      ..__...____...-\"                       :                     ║\n"
+				+ "║    : \\_\\                                     :                    ║\n"
+				+ "║    :    .--\"                                  :                   ║\n"
+				+ "║    `.__/  .-\" _                               :                   ║\n"
+				+ "║       /  /  ,\" ,-                             .'                  ║\n"
+				+ "║      (_)(`,(_,'L_,_____       ____....__   _.'                    ║\n"
+				+ "║         \"' \"             \"\"\"\"\"\"\"          \"\"\"                     ║\n");		  
+		
+		System.out.println(""
+				+ "╠═══════════════════════════════════════════════════════════════════╣");
+		
+		//System.out.println("║  ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ♥♥ʅ ʕ•ᴥ•ʔ ʃ ║");
+		System.out.println("║  Player name: " + this.getName()+"\t                                            ║");
+		System.out.println("║  Role: "+this.getPlayer()+"	\t                                            ║");
+		System.out.println("║  Timeout: "+this.getTimeout()+"\t                                                    ║");
+		System.out.println("║  Debug: "+this.debug +"\t                                                    ║");
+		System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
 		
 		State state=null;
 		aima.core.search.adversarial.Game<State,Action,Turn> rules=null;

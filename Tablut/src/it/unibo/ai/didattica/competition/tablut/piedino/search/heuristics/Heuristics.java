@@ -124,7 +124,37 @@ public abstract class Heuristics {
         }
         return kingCoord;
 	}
-   
+	/*
+	public boolean hasSafeWin(State state) { 
+		boolean isSafe;
+		if(numberOfKingEscapes(state) > 1) {
+			int rowIncr[] = {1, 0, -1, 0}; 
+			int colIncr[] = {0, 1, 0, -1};
+			int[] kingPosition = findKing(state);
+			
+			if(state.getPawn(kingPosition[0]-1, kingPosition[1]).equalsPawn("B")) {
+				for(int i=0; i < kingPosition[0]+1; i++ ) {
+					
+				}
+			}
+			 
+			if(state.getPawn(kingPosition[0]+1, kingPosition[1]).equalsPawn("B")) {
+			
+			}
+						
+			if(state.getPawn(kingPosition[0], kingPosition[1]-1).equalsPawn("B")) {
+				
+			}
+			
+			if(state.getPawn(kingPosition[0], kingPosition[1]+1).equalsPawn("B")) {
+				
+			}
+
+		} else {
+			return false;
+		}
+	}*/
+	
 
 }
 
