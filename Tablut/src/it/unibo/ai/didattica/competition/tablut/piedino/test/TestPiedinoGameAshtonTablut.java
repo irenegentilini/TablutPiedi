@@ -3,8 +3,7 @@ package it.unibo.ai.didattica.competition.tablut.piedino.test;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.PiedinoGameAshtonTablut;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +21,6 @@ public class TestPiedinoGameAshtonTablut {
 		state1=new StateTablut();
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Test
     public void test1() {
         

@@ -18,9 +18,9 @@ public class BlackHeuristics extends Heuristics{
 	private final String NUMBER_OF_ESCAPES="numberOfEscapes";
 	private final String ENCIRCLEMENT="encirclement";
 	
-	/*
-	//LARGO
-	private final List<String> rhombus = Arrays.asList(
+	
+	
+	private final List<String> wideRhombus = Arrays.asList(
 			"b3",
 			"c2",
 			"g2",
@@ -30,9 +30,9 @@ public class BlackHeuristics extends Heuristics{
 			"g8",
 			"h7"
 			);
-	*/
-	//STRETTO
-	private final List<String> rhombus = Arrays.asList(
+	
+
+	private final List<String> narrowRhombus = Arrays.asList(
 			"c4",
 			"d3",
 			"f3",
@@ -77,34 +77,34 @@ public class BlackHeuristics extends Heuristics{
 	public BlackHeuristics() {
 		super();
 		weights=new HashMap<String,Double>();
-		weights.put(BEST_POSITIONS, 5.0); //
-		weights.put(EATEN_WHITE,32.0); //10.0 //16.00
-		weights.put(BLACK_LEFT, 29.0); //5.0 //8.0 
-		weights.put(NUMBER_OF_ESCAPES, 14.0); //20.0 		
-		weights.put(ENCIRCLEMENT, 20.0);
+		weights.put(EATEN_WHITE,42.0); //10.0 //16.00 //ogni bianco mangiato vale 0,125*peso
+		weights.put(BLACK_LEFT, 24.0); //5.0 //8.0 //29.0 ogni nero ancora in vita vale 0,0625*peso
+		weights.put(NUMBER_OF_ESCAPES, 27.0); //20.0 		
+		weights.put(BEST_POSITIONS, 7.0); //
+		weights.put(ENCIRCLEMENT, 1.0);
 	}
-	
-	/*private double normalize(double value, double min, double max) {
-	    return 1 - ((value - min) / (max - min));
-	}*/
-
 
 	@Override
 	public double evaluateState(State state) {
-		double numEscapesBlocked= ((4 - numberOfKingEscapes(state))/4) * weights.get(NUMBER_OF_ESCAPES);
-//		if (numEscapesBlocked<3) 
-//			return Double.NEGATIVE_INFINITY;
-//		
-		double encirclement= (countBlackNearKing(state)/4) * weights.get(ENCIRCLEMENT);
+		double numEscapesBlocked=(1.0-Math.pow(numberOfKingEscapes(state)/4.0,2))* weights.get(NUMBER_OF_ESCAPES);
+		
+		double encirclement= (countBlackNearKing(state)/4.0) * weights.get(ENCIRCLEMENT);
 		
 		double eatenWhite= ((NUM_WHITE - state.getNumberOf(State.Pawn.WHITE))/NUM_WHITE) * weights.get(EATEN_WHITE);// FIXME metti il numero tot di white come variabile presa da boh
 		
 		double numBlack=(state.getNumberOf(State.Pawn.BLACK)/NUM_BLACK) * weights.get(BLACK_LEFT);
 		
-		double pawnsFormation= (rhombus.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.BLACK)).count()/(double)rhombus.size())*weights.get(BEST_POSITIONS);
-		
+		//double pawnsFormation=calcPawnFormationSupport(state)*weights.get(BEST_POSITIONS);
+		double pawnsFormation=(wideRhombus.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)wideRhombus.size());
 		return encirclement+numEscapesBlocked+eatenWhite+numBlack+pawnsFormation;
 		
 	}
+	
+	private double calcPawnFormationSupport(State state) {
+		double wideRhombusSupport=(wideRhombus.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)wideRhombus.size());
+		double narrowRhombusSupport=(narrowRhombus.stream().filter(box->getPawnAt(state, box).equals(State.Pawn.WHITE)).count()/(double)narrowRhombus.size());
+		return Math.max(wideRhombusSupport, narrowRhombusSupport);
+	}
+	
 
 }
