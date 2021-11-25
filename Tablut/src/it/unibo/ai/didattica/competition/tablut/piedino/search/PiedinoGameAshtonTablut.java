@@ -15,11 +15,8 @@ import java.util.logging.SimpleFormatter;
 import java.util.stream.IntStream;
 import java.io.IOException;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristics;
-import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristicsBrainmates;
-//import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.BlackHeuristicsBrainmates;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.Heuristics;
 import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.WhiteHeuristics;
-//import it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics.WhiteHeuristicsBrainmates;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.Game;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
@@ -912,22 +909,6 @@ public class PiedinoGameAshtonTablut implements Game, Cloneable, aima.core.searc
 				|| (turn.equals(State.Turn.WHITE) && state.getTurn().equals(State.Turn.BLACKWIN)))
 			return Double.NEGATIVE_INFINITY;
 
-		//ONLY FOR DEBUG PURPOSES
-		boolean brainmates=true;
-		if(brainmates) {
-			if (turn.equals(State.Turn.WHITE)) {
-				Heuristics heu = new WhiteHeuristics();
-//				return heu.evaluateState(state);
-				   //WhiteHeuristicsBrainmates heu=new WhiteHeuristicsBrainmates(state);
-				return heu.evaluateState(state);
-			} else {
-//				Heuristics heu = new BlackHeuristics();
-//				return heu.evaluateState(state);
-				BlackHeuristicsBrainmates heu=new BlackHeuristicsBrainmates(state);
-				return heu.evaluateState();
-			}
-		}
-		
 		// if it isn't a terminal state
 		Heuristics heuristics = null;
 		if (turn.equals(State.Turn.WHITE)) {
