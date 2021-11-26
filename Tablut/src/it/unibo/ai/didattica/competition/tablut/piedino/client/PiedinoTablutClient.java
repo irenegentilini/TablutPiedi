@@ -81,8 +81,6 @@ public class PiedinoTablutClient extends TablutClient {
 	
         PiedinoTablutClient client = new PiedinoTablutClient(pawn, teamName, timeout, ipAddress,0 ,debug);
         client.run();
-
-	
 	}
 	
 	
@@ -116,7 +114,7 @@ public class PiedinoTablutClient extends TablutClient {
 		System.out.println(""
 				+ "╠══════════════════════════════════════════════════════════════╣");
 		
-		//System.out.println("║  Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒ ║");
+//		System.out.println("║  Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒ ║");
 		System.out.println("║  Player name: " + this.getName()+"\t                                       ║");
 		System.out.println("║  Role: "+this.getPlayer()+"	\t                                      ║");
 		System.out.println("║  Timeout: "+this.getTimeout()+"\t                                               ║");

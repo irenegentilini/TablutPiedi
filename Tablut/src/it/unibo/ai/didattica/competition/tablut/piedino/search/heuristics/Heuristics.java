@@ -1,8 +1,11 @@
 package it.unibo.ai.didattica.competition.tablut.piedino.search.heuristics;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
 
 public abstract class Heuristics {
 
@@ -173,5 +176,25 @@ public abstract class Heuristics {
 //		return false;
 //	}
 //	
+	
+	public List<Integer[]> getPositionsOf(State state, State.Pawn pawn){
+		String strState=state.toLinearString().substring(0, 81);
+		int pos=0;
+		int boardsize=state.getBoard().length;
+		List<Integer[]> result=new ArrayList<>();
+		while((pos=strState.indexOf(pawn.toString(),pos))>0){
+			result.add(new Integer[]{pos/boardsize,pos%boardsize});
+			pos+=1;
+		}
+		Integer king[]= {strState.indexOf("K")/boardsize,strState.indexOf("K")%boardsize};
+		if (pawn.equals(Pawn.WHITE)) result.add(king);
+		Collections.sort(result,(p1,p2)->{
+			int dist1=Math.max(Math.abs(p1[0]-king[0]),Math.abs(p1[1]-king[1]));
+			int dist2=Math.max(Math.abs(p2[0]-king[0]),Math.abs(p2[1]-king[1]));
+			return dist1-dist2;
+		});
+		
+		return result;
+	}
 }
 
