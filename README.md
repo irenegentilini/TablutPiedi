@@ -1,3 +1,5 @@
+<img src="https://user-images.githubusercontent.com/56637604/143616330-a363bdee-932d-48d6-84c4-da2e10d1c080.png" width="300" height="300">
+
 # TablutPiedi
  TablutPiedi is a program that plays the game tablut in the ashton variant.
  
