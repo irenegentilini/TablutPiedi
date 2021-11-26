@@ -95,32 +95,32 @@ public class PiedinoTablutClient extends TablutClient {
 //		System.out.println(" ლ(=ↀωↀ=)ლ");
 //
     	System.out.print(
-				  "╔══════════════════════════════════════════════════════════════╗\n"+
-				  "║                              :            :                  ║\n"							   	
-				+ "║                              :            :                  ║\n"
-				+ "║                              :            :                  ║\n"
-				+ "║                              :            :                  ║\n"
-				+ "║                             .'            :                  ║\n"
-				+ "║                         _.-\"              :                  ║\n"
-				+ "║                     _.-\"                  '.                 ║\n"
-				+ "║      ..__...____...-\"                       :                ║\n"
-				+ "║    : \\_\\                                     :               ║\n"
-				+ "║    :    .--\"                                  :              ║\n"
-				+ "║    `.__/  .-\" _                               :              ║\n"
-				+ "║       /  /  ,\" ,-                             .'             ║\n"
-				+ "║      (_)(`,(_,'L_,_____       ____....__   _.'               ║\n"
-				+ "║         \"' \"             \"\"\"\"\"\"\"          \"\"\"                ║\n");		  
+				  "****************************************************************\n"+
+				  "*                              :            :                  *\n"							   	
+				+ "*                              :            :                  *\n"
+				+ "*                              :            :                  *\n"
+				+ "*                              :            :                  *\n"
+				+ "*                             .'            :                  *\n"
+				+ "*                         _.-\"              :                  *\n"
+				+ "*                     _.-\"                  '.                 *\n"
+				+ "*      ..__...____...-\"                       :                *\n"
+				+ "*    : \\_\\                                     :               *\n"
+				+ "*    :    .--\"                                  :              *\n"
+				+ "*    `.__/  .-\" _                               :              *\n"
+				+ "*       /  /  ,\" ,-                             .'             *\n"
+				+ "*      (_)(`,(_,'L_,_____       ____....__   _.'               *\n"
+				+ "*         \"' \"             \"\"\"\"\"\"\"          \"\"\"                *\n");		  
 		
 		System.out.println(""
-				+ "╠══════════════════════════════════════════════════════════════╣");
+				+ "****************************************************************");
 		
 //		System.out.println("║  Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒâ™¥â™¥Ê… Ê•â€¢á´¥â€¢Ê” Êƒ ║");
-		System.out.println("║  Player name: " + this.getName()+"\t                                       ║");
-		System.out.println("║  Role: "+this.getPlayer()+"	\t                                      ║");
-		System.out.println("║  Timeout: "+this.getTimeout()+"\t                                               ║");
-		if(debug) System.out.println("║  Verbose Output activated                                                ║");
+		System.out.println("*  Player name: " + this.getName()+"\t                                       *");
+		System.out.println("*  Role: "+this.getPlayer()+"	\t                                       *");
+		System.out.println("*  Timeout: "+this.getTimeout()+"\t                                               *");
+		if(debug) System.out.println("*  Verbose Output activated                                    *");
 		
-		System.out.println("╚══════════════════════════════════════════════════════════════╝");
+		System.out.println("****************************************************************");
 		
 		State state=null;
 		aima.core.search.adversarial.Game<State,Action,Turn> rules=null;
