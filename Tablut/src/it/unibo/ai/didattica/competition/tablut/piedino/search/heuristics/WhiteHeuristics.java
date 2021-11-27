@@ -9,9 +9,6 @@ import it.unibo.ai.didattica.competition.tablut.domain.State;
 
 public class WhiteHeuristics extends Heuristics {
 	
-	public final static double NUM_BLACK = 16.0;
-	public final static double NUM_WHITE = 8.0;  //come le variabili di gameashton tablut
-	
 	private final String BEST_POSITIONS = "bestPositions";
 	private final String EATEN_BLACK = "eatenBlack";
 	private final String WHITE_LEFT = "numberOfWhite";

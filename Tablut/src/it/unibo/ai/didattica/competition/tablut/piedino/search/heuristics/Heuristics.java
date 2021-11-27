@@ -9,6 +9,9 @@ import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
 
 public abstract class Heuristics {
 
+	public final static double NUM_BLACK = 16.0;
+	public final static double NUM_WHITE = 8.0;
+	
 	private List<String> escapes = Arrays.asList(
 			"b1",
 			"c1",

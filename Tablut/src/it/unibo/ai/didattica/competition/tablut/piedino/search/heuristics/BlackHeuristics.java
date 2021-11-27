@@ -10,9 +10,6 @@ import java.util.Map;
 
 public class BlackHeuristics extends Heuristics{
 	
-	public final static double NUM_BLACK = 16.0;
-	public final static double NUM_WHITE = 8.0;  //come le variabili di gameashton tablut
-	
 	private final String BEST_POSITIONS = "bestPositions";
 	private final String EATEN_WHITE = "eatenWhite";
 	private final String BLACK_LEFT = "numberOfBlack";
@@ -63,42 +60,13 @@ public class BlackHeuristics extends Heuristics{
 	
 	private final Map<String,Double> weights;
 	
-	/*
-	 * 
-	 */
-	/*
-	 * PROVE:
-	 * SE ALZO TANTO IL NUMERO DI ESCAPES I NERI SI SUICIDANO E ABBASSO TROPPO I BLACK LEFT
-	 * BEST_POSITIONS = 3.0
-	 * EATEN_WHITE = 10.0
-	 * BLACK_LEFT = 2.0
-	 * NUMBER_OF_ESCAPES = 20.0
-	 * ENCIRCLEMENT = 10.0
-	 * 
-	 * GOOD
-	 * PERCENTUALE:
-	 * BEST_POSITIONS = 5.0
-	 * EATEN_WHITE = 32
-	 * BLACK_LEFT = 24 + 5
-	 * NUMBER_OF_ESCAPES = 14.0
-	 * ENCIRCLEMENT = 20.0
-	 * 
-	 * 
-	 * PERCENTUALE:
-	 * BEST_POSITIONS = 5.0
-	 * EATEN_WHITE = 27.0
-	 * BLACK_LEFT = 29.0 
-	 * NUMBER_OF_ESCAPES = 14.0
-	 * ENCIRCLEMENT = 25.0
-	 * 
-	 */
 	public BlackHeuristics() {
 		super();
 		weights=new HashMap<String,Double>();
-		weights.put(EATEN_WHITE,42.0); //10.0 //16.00 //ogni bianco mangiato vale 0,125*peso
-		weights.put(BLACK_LEFT, 24.0); //5.0 //8.0 //29.0 ogni nero ancora in vita vale 0,0625*peso
-		weights.put(NUMBER_OF_ESCAPES, 30.0); //20.0 		
-		weights.put(BEST_POSITIONS, 7.0); //
+		weights.put(EATEN_WHITE,40.4); 
+		weights.put(BLACK_LEFT, 23.1); 
+		weights.put(NUMBER_OF_ESCAPES, 28.8); 
+		weights.put(BEST_POSITIONS, 6.7); 
 		weights.put(ENCIRCLEMENT,1.0);
 	}
 
@@ -128,7 +96,7 @@ public class BlackHeuristics extends Heuristics{
 		return Math.max(wideRhombusSupport, narrowRhombusSupport);
 	}
 	
-	public boolean hasKingSafeEscape(State state) {
+	private boolean hasKingSafeEscape(State state) {
 		int[] king= findKing(state);
 		State.Pawn[][] board=state.getBoard();
 		if(numberOfKingEscapes(state)>1) {
@@ -145,7 +113,7 @@ public class BlackHeuristics extends Heuristics{
 		return false;
 	}
 	
-	public boolean canBlackAttackPos(State state, int row,int col) {
+	private boolean canBlackAttackPos(State state, int row,int col) {
 		int rowIncr[] = {1, 0, -1, 0}; 
 		int colIncr[] = {0, 1, 0, -1};
 		State.Pawn[][] board=state.getBoard();
@@ -168,7 +136,7 @@ public class BlackHeuristics extends Heuristics{
 		return false;
 	}
 	
-	public double calcDistanceSupport(State state) {
+	private double calcDistanceSupport(State state) {
 		List<Integer[]> positions= getPositionsOf(state,Pawn.BLACK);
 		int[] king=findKing(state);
 		double result=0.0;
