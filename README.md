@@ -24,3 +24,7 @@
  Simply import the project into eclipse.
  You can then run the project simply running the files, or using the provided ant.
  If you're using the ants make sure to run ``` compile ```, ``` server ```, and then the chosen players.
+
+# Challenge
+This project was used to participate to the Ai@Unibo's Tablut Students Challenge.
+This project, piedino, won in a tie with another project, as seen in the results website: http://ai.unibo.it/node/621
